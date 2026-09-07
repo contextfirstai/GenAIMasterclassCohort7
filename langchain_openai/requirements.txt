@@ -1,0 +1,5 @@
+# Direct integrations only — do not pin langchain-core here; the stack below resolves it.
+langchain-openai==0.3.35
+langchain-anthropic==0.3.22
+langchain-ollama==0.3.10
+python-dotenv==1.2.2
