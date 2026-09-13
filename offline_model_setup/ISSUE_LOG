@@ -1,0 +1,19 @@
+================================================================================
+ISSUE LOG — offline_model_setup (append-only)
+================================================================================
+
+ISSUE-001 | 2026-05-10
+What went wrong: `python test_connection.py` exited with connection error because
+no Ollama server was listening on localhost:11434.
+How to avoid: Install/start Ollama before the check (`./setup.sh`, open the macOS
+Ollama app, or run `ollama serve`), then pull the model (`ollama pull llama3.2:3b`
+or `./download_model.sh`).
+
+ISSUE-002 | 2026-05-11
+What went wrong: `neural_network_example/.venv` was accidentally added to a git
+commit (~14k files, multi‑MB), so `git push` timed out or stalled. Virtualenvs
+belong only on the developer machine.
+How to avoid: Keep a repo root `.gitignore` with `.venv/` and `venv/`; run
+`git rm -r --cached path/to/.venv` if one was staged; never `git add` inside
+`.venv`. Rebuild envs with `pip install -r requirements.txt` after clone.
+
