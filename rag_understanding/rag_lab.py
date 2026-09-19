@@ -520,7 +520,7 @@ def _tab_token_usage():
         labels=["Prompt (context + question)", "Completion (answer)"],
         values=[prompt_t, compl_t],
         hole=0.5,
-        marker_colors=["#667eea", "#764ba2"],
+        marker_colors=["#41A5EE", "#2B8ED9"],
     ))
     fig.update_layout(title=f"Token split — {result.strategy} strategy, {result.model}",
                       height=350)
@@ -551,7 +551,7 @@ def _tab_token_usage():
 def _render_chunk(i: int, chunk) -> None:
     """Render a single RetrievedChunk with score badge and full text."""
     score_pct = int(chunk.score * 100)
-    color = "#28a745" if score_pct >= 70 else "#ffc107" if score_pct >= 40 else "#dc3545"
+    color = "#1CCE5E" if score_pct >= 70 else "#F6A823" if score_pct >= 40 else "#EF4343"
     st.markdown(
         f"**[{i}]** &nbsp; "
         f"<span style='background:{color};color:white;padding:2px 8px;border-radius:4px;"
@@ -656,7 +656,7 @@ def _tab_improve_scores(qdrant_url, qdrant_key, collection, openai_key, top_k):
             st.warning("No chunks retrieved at all. Make sure a PDF has been ingested.")
             return
 
-        _show_score_chart(baseline_chunks, "Baseline scores", "#ef553b")
+        _show_score_chart(baseline_chunks, "Baseline scores", "#EF4343")
         st.caption(
             f"Average score: **{sum(c.score for c in baseline_chunks)/len(baseline_chunks):.3f}** "
             f"· Chunks above 0.8: **{sum(1 for c in baseline_chunks if c.score >= 0.8)}**"
@@ -701,7 +701,7 @@ def _tab_improve_scores(qdrant_url, qdrant_key, collection, openai_key, top_k):
 
             st.markdown(f"**Original query:** `{query}`")
             st.markdown(f"**Expanded query:** `{expanded_query}`")
-            _show_score_chart(expanded_chunks, "After query expansion", "#00cc96")
+            _show_score_chart(expanded_chunks, "After query expansion", "#1CCE5E")
             _show_score_delta(baseline_chunks, expanded_chunks, label="query expansion")
 
         # ── Step 3: HNSW ef tuning ─────────────────────────────────────────
@@ -716,7 +716,7 @@ def _tab_improve_scores(qdrant_url, qdrant_key, collection, openai_key, top_k):
                 st.warning(f"ef tuning not supported by this Qdrant plan: {exc}")
                 ef_chunks = baseline_chunks
 
-        _show_score_chart(ef_chunks, f"After HNSW ef={ef_value}", "#636efa")
+        _show_score_chart(ef_chunks, f"After HNSW ef={ef_value}", "#41A5EE")
         _show_score_delta(baseline_chunks, ef_chunks, label=f"ef={ef_value}")
         st.markdown(
             f"> The HNSW index now explores **{ef_value}** candidate nodes instead of the default, "
@@ -738,7 +738,7 @@ def _tab_improve_scores(qdrant_url, qdrant_key, collection, openai_key, top_k):
                     st.error(f"Re-ranking error: {exc}")
                     reranked_chunks = baseline_chunks
 
-            _show_score_chart(reranked_chunks, "After re-ranking", "#ab63fa")
+            _show_score_chart(reranked_chunks, "After re-ranking", "#6BB8F2")
             _show_score_delta(baseline_chunks, reranked_chunks, label="re-ranking")
 
             with st.expander("Why did the order change?"):
@@ -933,7 +933,7 @@ def _tab_evaluate(qdrant_url, qdrant_key, collection, openai_key, top_k, score_t
             val = scores[key]
             if val is None:
                 continue
-            colour = "#2ecc71" if val >= 0.8 else ("#f39c12" if val >= 0.5 else "#e74c3c")
+            colour = "#1CCE5E" if val >= 0.8 else ("#F6A823" if val >= 0.5 else "#EF4343")
             fig.add_trace(go.Bar(
                 x=[val], y=[labels[key]], orientation="h",
                 marker_color=colour, showlegend=False,

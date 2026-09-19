@@ -1,0 +1,18 @@
+# Context First AI brand theme
+# Palette: Brand Guide §4 — Assets/Brand/BrandGuide_ContextFirstAI.md
+#   Context Blue #41A5EE · Deep Space #1A1B1E · Pure White #FFFFFF
+# The guide mandates dark backgrounds; light backgrounds are not permitted (§7).
+
+[theme]
+base = "dark"
+primaryColor = "#41A5EE"             # Context Blue — accents, widgets, focus
+backgroundColor = "#1A1B1E"          # Deep Space — primary background
+secondaryBackgroundColor = "#20242C" # Card — panels, sidebar, inputs
+textColor = "#FFFFFF"                # Pure White
+font = "sans serif"
+
+[server]
+headless = true
+
+[browser]
+gatherUsageStats = false
